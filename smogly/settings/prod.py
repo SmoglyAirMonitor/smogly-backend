@@ -31,3 +31,5 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST')
     }
 }
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
