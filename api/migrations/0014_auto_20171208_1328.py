@@ -12,6 +12,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RemoveField(
+            model_name='meteringhistory',
+            name='station',
+        ),
         migrations.DeleteModel(
             name='MeteringHistory',
         ),

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Station, Metering, Project
+from .models import Station, Metering
 
 
 class StationSerializer(serializers.ModelSerializer):
@@ -25,7 +25,6 @@ class StationSerializer(serializers.ModelSerializer):
             'city',
             'district',
             'owner',
-            'project',
             'last_metering',
         )
 
@@ -60,28 +59,4 @@ class MeteringSerializer(serializers.ModelSerializer):
             'rssi',
             'bpress_out1',
             'hw_id',
-        )
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
-    class Meta:
-        model = Project
-        fields = (
-            'name',
-            'slug',
-            'created',
-            'updated',
-            'website',
-            'description',
-            'logo',
-            'position',
-            'country',
-            'state',
-            'county',
-            'community',
-            'city',
-            'district',
-            'owner',
         )

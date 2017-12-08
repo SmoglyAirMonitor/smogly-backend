@@ -1,6 +1,6 @@
 from rest_framework.filters import FilterSet
 
-from .models import Station, Metering, Project
+from .models import Station, Metering
 
 
 class StationFilterSet(FilterSet):
@@ -16,8 +16,6 @@ class StationFilterSet(FilterSet):
             'city': ['exact', 'icontains'],
             'district': ['exact', 'icontains'],
             'owner': ['exact'],
-            'project': ['exact'],
-            'project__name': ['exact', 'icontains'],
             'created': ['lte', 'gte'],
             'updated': ['lte', 'gte'],
         }
@@ -29,21 +27,4 @@ class MeteringFilterSet(FilterSet):
         fields = {
             'created': ['lte', 'gte'],
             'station': ['exact'],
-        }
-
-
-class ProjectFilterSet(FilterSet):
-    class Meta:
-        model = Project
-        fields = {
-            'name': ['exact', 'icontains'],
-            'country': ['exact', 'icontains'],
-            'state': ['exact', 'icontains'],
-            'county': ['exact', 'icontains'],
-            'community': ['exact', 'icontains'],
-            'city': ['exact', 'icontains'],
-            'district': ['exact', 'icontains'],
-            'owner': ['exact'],
-            'created': ['lte', 'gte'],
-            'updated': ['lte', 'gte'],
         }

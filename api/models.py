@@ -171,7 +171,6 @@ class Station(AbstractTimeTrackable, AbstractLocation):
 
     # Relationship Fields
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    project = models.ForeignKey('api.Project')
 
     @property
     def last_metering(self):
@@ -218,31 +217,3 @@ class Metering(AbstractMetering):
 
     def get_absolute_url(self):
         return reverse('api_metering_detail', args=(self.pk,))
-
-
-class Project(AbstractTimeTrackable, AbstractLocation):
-    """
-    Model used for grouping sensor stations. Eg. by local anti-smog groups.
-    """
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=255)
-    slug = AutoSlugField(populate_from='name', blank=True, unique=True)
-
-    website = models.URLField()
-    description = models.TextField()
-    logo = models.ImageField(max_length=100, upload_to='project/', blank=True, null=True, default=None)
-
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-
-    class Meta:
-        ordering = ('-created',)
-
-    def __unicode__(self):
-        return u'%s' % self.slug
-
-    def get_absolute_url(self):
-        return reverse('api_project_detail', args=(self.slug,))
-
-    def get_update_url(self):
-        return reverse('api_project_update', args=(self.slug,))

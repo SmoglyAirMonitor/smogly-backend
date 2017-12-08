@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-from .models import Station, Metering, Project
+from .models import Station, Metering
 
 
 class StationAdminForm(forms.ModelForm):
@@ -31,18 +31,3 @@ class MeteringAdmin(admin.ModelAdmin):
     readonly_fields = ['created']
 
 admin.site.register(Metering, MeteringAdmin)
-
-
-class ProjectAdminForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = '__all__'
-
-
-class ProjectAdmin(admin.ModelAdmin):
-    form = ProjectAdminForm
-    list_display = ['name', 'slug', 'created', 'updated', 'website', 'description', 'logo']
-
-admin.site.register(Project, ProjectAdmin)
-
-
