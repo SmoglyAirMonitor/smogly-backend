@@ -1,5 +1,5 @@
 """
-WSGI config for EnviroMonitorWeb project.
+WSGI config for smogly project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -18,6 +18,6 @@ dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EnviroMonitorWeb.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "smogly.settings")
 
 application = get_wsgi_application()
