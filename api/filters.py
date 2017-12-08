@@ -8,7 +8,6 @@ class StationFilterSet(FilterSet):
         model = Station
         fields = {
             'name': ['exact', 'icontains'],
-            'is_in_test_mode': ['exact'],
             'country': ['exact', 'icontains'],
             'state': ['exact', 'icontains'],
             'county': ['exact', 'icontains'],

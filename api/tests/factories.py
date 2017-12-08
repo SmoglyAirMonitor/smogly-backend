@@ -76,28 +76,13 @@ class StationFactory(AbstractLocationFactory):
         model = Station
 
 
-class AbstractMeteringFactory(factory.django.DjangoModelFactory):
-    pm01 = FuzzyFloatRound(0.0, 150.0, ndigits=2)
+class MeteringFactory(factory.django.DjangoModelFactory):
     pm25 = FuzzyFloatRound(0.0, 150.0, ndigits=2)
     pm10 = FuzzyFloatRound(0.0, 150.0, ndigits=2)
-    temp_out1 = FuzzyFloatRound(-25.0, 30.0, ndigits=2)
-    temp_out2 = factory.SelfAttribute('temp_out1')
-    temp_out3 = factory.SelfAttribute('temp_out1')
-    temp_int_air1 = FuzzyFloatRound(28.0, 30.0, ndigits=2)
-    hum_out1 = FuzzyFloatRound(5.0, 99.0, ndigits=2)
-    hum_out2 = factory.SelfAttribute('hum_out1')
-    hum_out3 = factory.SelfAttribute('hum_out1')
-    hum_int_air1 = FuzzyFloatRound(30.0, 35.0, ndigits=2)
-    rssi = FuzzyFloatRound(-100.0, 0.0, ndigits=2)
-    bpress_out1 = factory.fuzzy.FuzzyInteger(900, 1100)
-    hw_id = factory.Faker('uuid4')
+    temperature = FuzzyFloatRound(-25.0, 30.0, ndigits=2)
+    humidity = FuzzyFloatRound(5.0, 99.0, ndigits=2)
 
     station = factory.SubFactory(StationFactory)
-
-    class Meta:
-        abstract = True
-
-
-class MeteringFactory(AbstractMeteringFactory):
+    
     class Meta:
         model = Metering
