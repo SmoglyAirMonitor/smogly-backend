@@ -12,9 +12,9 @@ from rest_framework_jwt.views import ObtainJSONWebToken
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from .exceptions import StationWrongToken
-from .filters import StationFilterSet, MeteringFilterSet, MeteringHistoryFilterSet, ProjectFilterSet
-from .models import Station, Metering, MeteringHistory, Project
-from .serializers import StationSerializer, MeteringSerializer, MeteringHistorySerializer, ProjectSerializer
+from .filters import StationFilterSet, MeteringFilterSet, ProjectFilterSet
+from .models import Station, Metering, Project
+from .serializers import StationSerializer, MeteringSerializer, ProjectSerializer
 
 
 class ObtainJWT(ObtainJSONWebToken):
@@ -66,15 +66,6 @@ class MeteringViewSet(ModelViewSet):
         if self.action in ('create',):
             self.permission_classes = [AllowAny]
         return super(self.__class__, self).get_permissions()
-
-
-class MeteringHistoryViewSet(ModelViewSet):
-    """ViewSet for the MeteringHistory class"""
-
-    queryset = MeteringHistory.objects.all()
-    serializer_class = MeteringHistorySerializer
-    filter_class = MeteringHistoryFilterSet
-    ordering_fields = ('created',)
 
 
 class ProjectViewSet(ModelViewSet):

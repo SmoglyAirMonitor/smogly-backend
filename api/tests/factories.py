@@ -10,7 +10,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.files import File
 from faker import Faker
 
-from api.models import Station, Metering, MeteringHistory, Project
+from api.models import Station, Metering, Project
 
 
 class FuzzyFloatRound(factory.fuzzy.FuzzyFloat):
@@ -147,8 +147,3 @@ class AbstractMeteringFactory(factory.django.DjangoModelFactory):
 class MeteringFactory(AbstractMeteringFactory):
     class Meta:
         model = Metering
-
-
-class MeteringHistoryFactory(AbstractMeteringFactory):
-    class Meta:
-        model = MeteringHistory
