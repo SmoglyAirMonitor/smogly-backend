@@ -220,24 +220,6 @@ class Metering(AbstractMetering):
         return reverse('api_metering_detail', args=(self.pk,))
 
 
-class MeteringHistory(AbstractMetering):
-    """
-    Model representing history entries calculated from Metering entries, resolution 1 hour.
-
-    Idea:
-    * background job runs once per hour
-    * job calculates avarage of readings from Metering entries older than 2 weeks (avarage
-    should be calulated per hour basis, one MeteringHistory entry per hour)
-    * entries that was used to calculate avarage should be cleaned from Metering database
-    """
-
-    class Meta:
-        ordering = ('-created',)
-
-    def get_absolute_url(self):
-        return reverse('api_meteringhistory_detail', args=(self.pk,))
-
-
 class Project(AbstractTimeTrackable, AbstractLocation):
     """
     Model used for grouping sensor stations. Eg. by local anti-smog groups.

@@ -1,6 +1,6 @@
 from rest_framework.filters import FilterSet
 
-from .models import Station, Metering, MeteringHistory, Project
+from .models import Station, Metering, Project
 
 
 class StationFilterSet(FilterSet):
@@ -26,15 +26,6 @@ class StationFilterSet(FilterSet):
 class MeteringFilterSet(FilterSet):
     class Meta:
         model = Metering
-        fields = {
-            'created': ['lte', 'gte'],
-            'station': ['exact'],
-        }
-
-
-class MeteringHistoryFilterSet(FilterSet):
-    class Meta:
-        model = MeteringHistory
         fields = {
             'created': ['lte', 'gte'],
             'station': ['exact'],

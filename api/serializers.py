@@ -1,6 +1,6 @@
-from rest_framework import  serializers
+from rest_framework import serializers
 
-from .models import Station, Metering, Project, MeteringHistory
+from .models import Station, Metering, Project
 
 
 class StationSerializer(serializers.ModelSerializer):
@@ -61,11 +61,6 @@ class MeteringSerializer(serializers.ModelSerializer):
             'bpress_out1',
             'hw_id',
         )
-
-
-class MeteringHistorySerializer(serializers.ModelSerializer):
-    class Meta(MeteringSerializer.Meta):
-        model = MeteringHistory
 
 
 class ProjectSerializer(serializers.ModelSerializer):
