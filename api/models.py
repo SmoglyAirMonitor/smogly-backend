@@ -1,10 +1,10 @@
 import uuid
+
 from django.conf import settings
-from django.core.cache import cache
 from django.contrib.gis.db import models as gis_models
+from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.db import models
-from django_extensions.db.fields import AutoSlugField
 
 from .utils import generate_token
 
@@ -19,105 +19,6 @@ class AbstractTimeTrackable(models.Model):
 
     class Meta:
         abstract = True
-
-
-class AbstractMetering(models.Model):
-    """
-    Abstract model for Metering and MeteringHistory models.
-    """
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created = models.DateTimeField(auto_now_add=True, db_index=True)
-
-    # Data Fields
-    pm01 = models.IntegerField(
-        help_text='PM 0.1 in ug/m^3',
-        blank=True,
-        default=None,
-        null=True
-    )
-    pm25 = models.IntegerField(
-        help_text='PM 2.5 in ug/m^3'
-    )
-    pm10 = models.IntegerField(
-        help_text='PM 10 in ug/m^3'
-    )
-    temp_out1 = models.FloatField(
-        help_text='Outside temperature sensor1, in C.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    temp_out2 = models.FloatField(
-        help_text='Outside temperature sensor2, optional, in C.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    temp_out3 = models.FloatField(
-        help_text='Outside temperature sensor3, optional, in C.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    temp_int_air1 = models.FloatField(
-        help_text='Internal temperature sensor1 (air sucked by PM sensor), in C.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    hum_out1 = models.FloatField(
-        help_text='Outside relative humidity sensor1, in %.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    hum_out2 = models.FloatField(
-        help_text='Outside relative humidity sensor2, optional, in %.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    hum_out3 = models.FloatField(
-        help_text='Outside relative humidity sensor3, optional, in %.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    hum_int_air1 = models.FloatField(
-        help_text='Internal relative humidity sensor1 (air sucked by PM sensor), in %.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    rssi = models.FloatField(
-        help_text='RSSI of WiFi (signal strength). For debugging "vanishing" stations.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    bpress_out1 = models.FloatField(
-        help_text='Outside absolute barometric pressure sensor1, in hPa.',
-        blank=True,
-        default=None,
-        null=True
-    )
-    hw_id = models.CharField(
-        help_text='Unique ID of station hardware that created Metering.',
-        max_length=255,
-        blank=True,
-        default=None,
-        null=True
-    )
-
-    # Relationship Fields
-    station = models.ForeignKey('api.Station')
-
-    class Meta:
-        abstract = True
-
-    def __unicode__(self):
-        return u'%s' % self.created
 
 
 class AbstractLocation(models.Model):
@@ -157,10 +58,6 @@ class Station(AbstractTimeTrackable, AbstractLocation):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=30, choices=TYPE_CHOICES, default=TYPE_SMOGLY)
     notes = models.CharField(max_length=255)
-    is_in_test_mode = models.BooleanField(
-        help_text='Whether sensor is in test mode or not (all data).',
-        default=False
-    )
     token = models.CharField(
         max_length=255,
         help_text='Token automatically generated while saving model, needed by Station to POST any data.',
@@ -186,13 +83,13 @@ class Station(AbstractTimeTrackable, AbstractLocation):
 
     @property
     def last_metering_cache_key(self):
-        return u'station-{}-last-metering'.format(self.pk)
+        return 'station-{}-last-metering'.format(self.pk)
 
     class Meta:
         ordering = ('-created',)
 
-    def __unicode__(self):
-        return u'%s' % self.id
+    def __str__(self):
+        return '{}'.format(self.id)
 
     def get_absolute_url(self):
         return reverse('api_station_detail', args=(self.id,))
@@ -201,19 +98,48 @@ class Station(AbstractTimeTrackable, AbstractLocation):
         return reverse('api_station_update', args=(self.id,))
 
 
-class Metering(AbstractMetering):
+class Metering(models.Model):
     """
     Model representing data submitted by sensor station.
     """
 
-    is_test = models.BooleanField(
-        help_text='Whether entry was created using Sensor test mode (Sensor.is_in_test_mode=True).',
-        default=False,
-        db_index=True
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    # Data Fields
+    pm25 = models.IntegerField(
+        help_text='PM 2.5 in ug/m^3'
     )
+    pm10 = models.IntegerField(
+        help_text='PM 10 in ug/m^3'
+    )
+    temperature = models.FloatField(
+        help_text='Outside temperature, in C.',
+        blank=True,
+        default=None,
+        null=True
+    )
+    humidity = models.FloatField(
+        help_text='Outside relative humidity, in %.',
+        blank=True,
+        default=None,
+        null=True
+    )
+
+    # Relationship Fields
+    station = models.ForeignKey('api.Station')
 
     class Meta:
         ordering = ('-created',)
+
+    def __str__(self):
+        return 'created={}, pm10={} [ug/m^3], pm25={} [ug/m^3], temperature={} [C], humidity={} [%]'.format(
+            self.created,
+            self.pm10,
+            self.pm25,
+            self.temperature,
+            self.humidity,
+        )
 
     def get_absolute_url(self):
         return reverse('api_metering_detail', args=(self.pk,))

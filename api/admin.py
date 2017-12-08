@@ -11,7 +11,7 @@ class StationAdminForm(forms.ModelForm):
 
 class StationAdmin(admin.ModelAdmin):
     form = StationAdminForm
-    list_display = ['name', 'created', 'updated', 'type', 'notes', 'is_in_test_mode', 'position', 'country', 'state',
+    list_display = ['name', 'created', 'updated', 'type', 'notes', 'position', 'country', 'state',
                     'county', 'community', 'city', 'district']
     readonly_fields = ['created', 'updated']
     
@@ -26,8 +26,7 @@ class MeteringAdminForm(forms.ModelForm):
 
 class MeteringAdmin(admin.ModelAdmin):
     form = MeteringAdminForm
-    list_display = ['created', 'pm01', 'pm25', 'pm10', 'temp_out1', 'temp_out2', 'temp_out3', 'hum_out1', 'hum_out2',
-                    'hum_out3', 'temp_int_air1', 'hum_int_air1', 'rssi', 'bpress_out1']
+    list_display = ['created', 'pm25', 'pm10', 'temperature', 'humidity']
     readonly_fields = ['created']
 
 admin.site.register(Metering, MeteringAdmin)

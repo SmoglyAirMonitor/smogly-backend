@@ -49,7 +49,6 @@ class StationApiTests(UserAuthBase):
         self.assertEqual(data['name'], self.station_data['name'])
         self.assertEqual(data['type'], self.station_data['type'])
         self.assertEqual(data['notes'], self.station_data['notes'])
-        self.assertEqual(data['is_in_test_mode'], self.station_data['is_in_test_mode'])
         self.assertEqual(data['altitude'], self.station_data['altitude'])
         self.assertEqual(data['position'], self.station_data['position'])
         self.assertEqual(data['country'], self.station_data['country'])
