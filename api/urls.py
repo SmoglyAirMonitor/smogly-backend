@@ -1,12 +1,11 @@
 from django.conf.urls import url, include
 from rest_framework import routers
 
-from .views import StationViewSet, MeteringViewSet, ProjectViewSet, schema_view, ObtainJWT
+from .views import StationViewSet, MeteringViewSet, schema_view, ObtainJWT
 
 router = routers.DefaultRouter()
 router.register(r'station', StationViewSet)
 router.register(r'metering', MeteringViewSet)
-router.register(r'project', ProjectViewSet)
 
 urlpatterns = (
     # urls for Django Rest Framework API

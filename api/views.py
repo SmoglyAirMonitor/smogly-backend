@@ -12,9 +12,9 @@ from rest_framework_jwt.views import ObtainJSONWebToken
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from .exceptions import StationWrongToken
-from .filters import StationFilterSet, MeteringFilterSet, ProjectFilterSet
-from .models import Station, Metering, Project
-from .serializers import StationSerializer, MeteringSerializer, ProjectSerializer
+from .filters import StationFilterSet, MeteringFilterSet
+from .models import Station, Metering
+from .serializers import StationSerializer, MeteringSerializer
 
 
 class ObtainJWT(ObtainJSONWebToken):
@@ -66,17 +66,6 @@ class MeteringViewSet(ModelViewSet):
         if self.action in ('create',):
             self.permission_classes = [AllowAny]
         return super(self.__class__, self).get_permissions()
-
-
-class ProjectViewSet(ModelViewSet):
-    """ViewSet for the Project class"""
-
-    filter_backends = api_settings.DEFAULT_FILTER_BACKENDS + [InBBoxFilter]
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    filter_class = ProjectFilterSet
-    ordering_fields = ('updated', 'created', 'name')
-    bbox_filter_field = 'position'
 
 
 @api_view()
