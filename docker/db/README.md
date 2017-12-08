@@ -1,5 +1,5 @@
 ## To manually monitor conatiner state use below command
-`docker inspect --format='{{json .State.Health}}' enviromonitorweb_db_1`
+`docker inspect --format='{{json .State.Health}}' smoglybackend_web_db_1`
 
 I.e. message below:
 ```json
@@ -9,5 +9,5 @@ I.e. message below:
 With `docker ps` your container status should be healthy 
 
     CONTAINER ID        IMAGE                   COMMAND                  CREATED              STATUS                         PORTS               NAMES
-    5f3cf5212031        enviromonitorweb_test   "py.test -s --cov=."     About a minute ago   Restarting (0) 4 seconds ago                       enviromonitorweb_test_1
-    7765dc8099d9        enviromonitorweb_db     "/docker-entrypoint.s"   2 minutes ago        Up 2 minutes (healthy)         5432/tcp            enviromonitorweb_db_1
+    5f3cf5212031        smoglybackend_web_test   "py.test -s --cov=."     About a minute ago   Restarting (0) 4 seconds ago                       smoglybackend_web_test_1
+    7765dc8099d9        smoglybackend_web_db     "/docker-entrypoint.s"   2 minutes ago        Up 2 minutes (healthy)         5432/tcp            smoglybackend_web_db_1

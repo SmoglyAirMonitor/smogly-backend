@@ -26,7 +26,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DJANGO_SETTINGS_MODULE: EnviroMonitorWeb.settings.dev
+      DJANGO_SETTINGS_MODULE: smogly.settings.dev
     command: python manage.py runserver 0.0.0.0:8080
     restart: unless-stopped
 
@@ -41,5 +41,5 @@ services:
     volumes:
       - .:/code/
     environment:
-      DJANGO_SETTINGS_MODULE: EnviroMonitorWeb.settings.test
+      DJANGO_SETTINGS_MODULE: smogly.settings.test
     command: py.test -s --cov=.
