@@ -23,7 +23,7 @@ You can get this project up and running in a traditional way with virtual enviro
 ## Notes:
 1. To run command inside container you can use run entrypoint command. 
 I.e. `sudo docker-compose run web py.test -s --cov=. --cov-report=html` to run unit tests and check coverage.
-I.e. `sudo docker exec -it enviromonitorweb_db_1 psql -U docker -d docker` when you want access to database
+I.e. `sudo docker exec -it smoglybackend_web_db_1 psql -U docker -d docker` when you want access to database
 
 ## API documentaion:
 Check http://localhost:8080/api/v1/docs/ to find full REST API documentation.
